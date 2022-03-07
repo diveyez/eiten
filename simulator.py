@@ -110,20 +110,20 @@ class MontoCarloSimulator:
 		hist_dist = scipy.stats.rv_histogram(hist) # Distribution function
 
 		predicted_prices = []
+		new_close_prices_percentages = []
 		# Do 25 iterations to simulate prices
-		for iteration in range(25):
+		for _ in range(25):
 			new_close_prices = [close_prices[-1]]
-			new_close_prices_percentages = []
-			for i in range(simulation_timesteps):
+			for _ in range(simulation_timesteps):
 				random_value = random.uniform(0, 1)
 				return_value = round(np.exp(hist_dist.ppf(random_value)), 5) # Get simulated return
 				price_last_point = new_close_prices[-1]
 				price_next_point = price_last_point * return_value
 				percentage_change = self.calculate_percentage_change(price_last_point, price_next_point)
-					
+
 				# Add to list
 				new_close_prices.append(price_next_point)
-					
+
 			predicted_prices.append(new_close_prices)
 
 		# Calculate confidence intervals and average future returns. Conf intervals are not being used right now
